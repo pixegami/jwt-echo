@@ -41,6 +41,7 @@ def root_get(authorization: Union[str, None] = Header(default=None)):
     token = authorization_parts[1]
     token_claims = None
     is_token_valid = False
+    details = None
 
     try:
         token_claims = jwt.decode(token, options={"verify_signature": False})
@@ -54,8 +55,13 @@ def root_get(authorization: Union[str, None] = Header(default=None)):
         is_token_valid = True
     except Exception as e:
         print(f"Could not validate token: {e}")
+        details = str(e)
 
-    return {"token_claims": token_claims, "is_token_valid": is_token_valid}
+    return {
+        "token_claims": token_claims,
+        "is_token_valid": is_token_valid,
+        "details": details,
+    }
 
 
 def get_public_key():
