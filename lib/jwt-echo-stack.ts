@@ -25,14 +25,7 @@ export class JwtEchoStack extends Stack {
 
     const api = new apiGateway.LambdaRestApi(this, "ApiGateway", {
       handler: apiFunction,
-      proxy: false,
-    });
-
-    api.root.addMethod("ANY");
-    api.root.addCorsPreflight({
-      allowOrigins: ["*"],
-      allowHeaders: ["*"],
-      allowMethods: ["ANY"],
+      proxy: true,
     });
   }
 }
